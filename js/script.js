@@ -18,8 +18,8 @@ const createPet = function (name, species){
         console.log(`Yay! ${name} loves to play!`);
         this.isTired+=1;
       };
-    }
-    return pet;
+    },
   }
+  return pet;
 };
 
