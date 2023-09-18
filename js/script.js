@@ -1,22 +1,22 @@
 const statusButton = document.querySelector("button");
 const pets = document.querySelector(".all-pets");
 
-const createPet = function (name, species){
+const createPet = function (name, species) {
   const pet = {
     name: name,
     species: species,
-    isTired: 5,
-    sleep: function(){
-      console.log(`${name} needs a nap. Zzzz...`);
+    isTired: 5, // Scale from 1 (refreshed) to 10 (exhausted)
+    sleep: function () {
+      console.log(`${this.name} needs a nap. Zzzz...`); // need "this" b/c it's calling the object from inside the method
       this.isTired = 1;
     },
-    play: function(){
-      if(this.isTired===10){
+    play: function () {
+      if (this.isTired === 10) {
         console.log("Too tired to play.");
         this.sleep();
       } else {
-        console.log(`Yay! ${name} loves to play!`);
-        this.isTired+=1;
+        console.log(`Yay! ${this.name} loves to play!`);
+        this.isTired += 1;
       };
     },
   }
@@ -34,18 +34,26 @@ clover.isTired = 8;
 francine.isTired = 8;
 // console.log(clover, francine); // verify values changed
 
+// Create array of pet objects:
 const allPets = [sora, clover, baxter, cleo, francine];
 // console.log(allPets); // verify array
 
-const showPets = function(petArray){ //petArray argument is placeholder for allPets array
+// Function to display pets in browser:
+const showPets = function (petArray) { // petArray argument is placeholder for allPets array
+  // variable for empty list (so list clears and updates with fresh info each time showPets is run)
   pets.innerHTML = "";
-  for (let pet of petArray){
+
+  for (let pet of petArray) {
     let status = "ready to play!";
-    if (pet.isTired>=7){ // pet (from for..of loop) is needed in front of the status property to specify where it's coming from
+    if (pet.isTired >= 7) { // pet (from for..of loop) is needed in front of the status property to specify where it's coming from
       status = "sleeping";
     }
-    let li = document.createElement("li"); // solution uses const instead of let
-    li.innerHTML = `<span class="pet-name>${pet.name}</span> the ${pet.species} is ${pet.status}.` // need pet in front of each property, use innerHTML b/c <span>
-    pets.append(li); // need to point where li is being added, ie. pets.append
+    let li = document.createElement("li"); // solution uses const instead of let...not sure what issues (if any) this could cause...
+    li.innerHTML = `<span class="pet-name">${pet.name}</span> the ${pet.species} is ${status}.` // need pet in front of name/species property, use innerHTML b/c <span>
+    pets.append(li); // need to point where li is being appended (ie. pets.append(li))
   }
 };
+
+statusButton.addEventListener("click", function () {
+  showPets(allPets);
+});
