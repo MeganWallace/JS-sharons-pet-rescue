@@ -36,3 +36,16 @@ francine.isTired = 8;
 
 const allPets = [sora, clover, baxter, cleo, francine];
 // console.log(allPets); // verify array
+
+const showPets = function(petArray){ //petArray argument is placeholder for allPets array
+  pets.innerHTML = "";
+  for (let pet of petArray){
+    let status = "ready to play!";
+    if (pet.isTired>=7){ // pet (from for..of loop) is needed in front of the status property to specify where it's coming from
+      status = "sleeping";
+    }
+    let li = document.createElement("li"); // solution uses const instead of let
+    li.innerHTML = `<span class="pet-name>${pet.name}</span> the ${pet.species} is ${pet.status}.` // need pet in front of each property, use innerHTML b/c <span>
+    pets.append(li); // need to point where li is being added, ie. pets.append
+  }
+};
